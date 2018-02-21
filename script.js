@@ -7,17 +7,31 @@ const mapInfo = document.getElementById("map-details"),
     // temp = Handlebars.compile(sourceTmp);
 
 
-
-
 window.addEventListener("load", () => {
     initMap();
-
-
 
 }, false); 
 
 const getCentroids = (obj)=>{
-// let polyBnds = new google.maps.LatLngBounds(),
+
+}
+
+const initMap = () => {
+    var position = { lat: 51.1267432, lng: 17.063248 };
+    var map = new google.maps.Map(maps, {
+        zoom: 11,
+        center: position
+    });
+
+    /*LOAD DATA GEOJSON*/
+    map.data.loadGeoJson(groups);
+    map.data.loadGeoJson(estate);
+
+    map.data.setStyle((elem) => {
+        // console.log(elem.getProperty('NAZWAOSIED'));
+
+        if (elem.f.GRUPA == undefined) {
+            // let polyBnds = new google.maps.LatLngBounds(),
             //     bounds = [];
             // elem.getGeometry().forEachLatLng(function(path) {
             //     bounds.push(path);
@@ -37,39 +51,6 @@ const getCentroids = (obj)=>{
 
             // iW.open(map);
             // let bounds = elem.getGeometry();
-}
-const initObjMap = (idMap,zoom,center,lat,lng)=>{
-  return {
-        idMap:document.getElementById(idMap),
-        zoom,
-        center,
-        lat,
-        lng,
-    }
- 
-}
-const createMaker = ()=>{}
-const createLabel = ()=>{}
-
-const initMap = () => {
-    const objMap = initObjMap('map',11,position,51.1267432,17.063248);
-    console.log(initObjMap('map',11,"position",51.1267432,17.063248))
-
-    var position = { lat: objMap.lat, lng: objMap.lng };
-    var map = new google.maps.Map(objMap.idMap, {
-        zoom: objMap.zoom,
-        center: objMap.center
-    });
-
-    /*LOAD DATA GEOJSON*/
-    map.data.loadGeoJson(groups);
-    map.data.loadGeoJson(estate);
-
-    map.data.setStyle((elem) => {
-        // console.log(elem.getProperty('NAZWAOSIED'));
-
-        if (elem.f.GRUPA == undefined) {
-            
             map.data.addListener('mouseover', function(event) {
                 map.data.revertStyle();
                 map.data.overrideStyle(event.feature, { strokeWeight: 8 });
