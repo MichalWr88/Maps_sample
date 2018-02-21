@@ -1,10 +1,11 @@
 const mapInfo = document.getElementById("map-details"),
     details = document.querySelector("#map-details"),
     estate = "./DATA/OSIEDLA.geojson",
+    groups = "DATA/GRUPY.geojson",
     maps = document.getElementById('map'),
-    groups = "DATA/GRUPY.geojson";
-sourceTmp = document.getElementById("template-details");
-// temp = Handlebars.compile(sourceTmp);
+sourceTmp = document.getElementById("template-details").innerHTML,
+temp = Handlebars.compile(sourceTmp);
+
 
 
 
@@ -72,12 +73,24 @@ const initMap = (objMap,...geo) => {
     map.data.setStyle((elem) => {
         // console.log(elem.getProperty('NAZWAOSIED'));
 
-        if (elem.f.GRUPA == undefined) {
+        if (elem.f.NAZWAOSIED !== undefined) {
 
             map.data.addListener('mouseover', function(event) {
                 map.data.revertStyle();
-                map.data.overrideStyle(event.feature, { strokeWeight: 8 });
-                mapInfo.innerHTML = `Obreb ${event.feature.f.NAZWAOSIED}`;
+                map.data.overrideStyle(event.feature, { 
+                    strokeWeight: 8,
+                    fillColor: "transparent"
+                 });
+
+                const showObj ={
+                    obreb: event.feature.f.NAZWAOSIED,
+                    rejon: event.feature.f.GRUPA,
+                    area:(event.feature.f.SHAPE_AREA/1000000).toFixed(2) + " ha",
+                    lenth:(event.feature.f.SHAPE_LEN/100).toFixed(2) + " km"
+
+                }
+                const html = temp(showObj);
+                mapInfo.innerHTML = html;
 
             });
 
@@ -118,7 +131,7 @@ const initMap = (objMap,...geo) => {
     });
 
     map.data.addListener('click', function(event) {
-        getWiki(event.feature.f.NAZWAOSIED);
+        
     });
 
 

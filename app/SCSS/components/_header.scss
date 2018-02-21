@@ -59,6 +59,7 @@ height:auto;
 .presentation{
 width:100%;
 display:flex;
+flex-direction:row;
 
 }
 .presentation__details{
@@ -66,7 +67,12 @@ flex:1;
 
 }
 .presentation__header{
+    // width:100%;
+    flex:1;
 
+}
+.presentation__data{
+    font-weight:700;
 }
 .presentation__map{
 flex:3;

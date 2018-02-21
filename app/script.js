@@ -78,10 +78,10 @@ module.exports = __webpack_require__(2);
 var mapInfo = document.getElementById("map-details"),
     details = document.querySelector("#map-details"),
     estate = "./DATA/OSIEDLA.geojson",
+    groups = "DATA/GRUPY.geojson",
     maps = document.getElementById('map'),
-    groups = "DATA/GRUPY.geojson";
-sourceTmp = document.getElementById("template-details"); // temp = Handlebars.compile(sourceTmp);
-
+    sourceTmp = document.getElementById("template-details").innerHTML,
+    temp = Handlebars.compile(sourceTmp);
 window.addEventListener("load", function () {
   var mapO = initObjMap('map', 11, 51.1267432, 17.063248);
   initMap(mapO, estate, groups);
@@ -150,13 +150,21 @@ var initMap = function initMap(objMap) {
   });
   map.data.setStyle(function (elem) {
     // console.log(elem.getProperty('NAZWAOSIED'));
-    if (elem.f.GRUPA == undefined) {
+    if (elem.f.NAZWAOSIED !== undefined) {
       map.data.addListener('mouseover', function (event) {
         map.data.revertStyle();
         map.data.overrideStyle(event.feature, {
-          strokeWeight: 8
+          strokeWeight: 8,
+          fillColor: "transparent"
         });
-        mapInfo.innerHTML = "Obreb ".concat(event.feature.f.NAZWAOSIED);
+        var showObj = {
+          obreb: event.feature.f.NAZWAOSIED,
+          rejon: event.feature.f.GRUPA,
+          area: (event.feature.f.SHAPE_AREA / 1000000).toFixed(2) + " ha",
+          lenth: (event.feature.f.SHAPE_LEN / 100).toFixed(2) + " km"
+        };
+        var html = temp(showObj);
+        mapInfo.innerHTML = html;
       });
       return {
         fillColor: getRandomColor(),
@@ -181,9 +189,7 @@ var initMap = function initMap(objMap) {
       };
     }
   });
-  map.data.addListener('click', function (event) {
-    getWiki(event.feature.f.NAZWAOSIED);
-  }); //     map.data.addListener('click', function(event) {
+  map.data.addListener('click', function (event) {}); //     map.data.addListener('click', function(event) {
   //         if(event.feature.f.GRUPA !== 1){
   // console.log(event.feature.f);
   //         }
