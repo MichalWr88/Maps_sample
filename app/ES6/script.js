@@ -3,73 +3,77 @@ const mapInfo = document.getElementById("map-details"),
     estate = "./DATA/OSIEDLA.geojson",
     maps = document.getElementById('map'),
     groups = "DATA/GRUPY.geojson";
-    sourceTmp = document.getElementById("template-details");
-    // temp = Handlebars.compile(sourceTmp);
+sourceTmp = document.getElementById("template-details");
+// temp = Handlebars.compile(sourceTmp);
 
 
 
 
 window.addEventListener("load", () => {
-    initMap();
+    const mapO = initObjMap('map', 11, 51.1267432, 17.063248);
+    initMap(mapO,estate,groups);
 
 
 
-}, false); 
+}, false);
 
-const getCentroids = (obj)=>{
-// let polyBnds = new google.maps.LatLngBounds(),
-            //     bounds = [];
-            // elem.getGeometry().forEachLatLng(function(path) {
-            //     bounds.push(path);
-            //     polyBnds.extend(path);
-            // });
-            // let area = google.maps.geometry.spherical.computeArea(bounds);
-            //  iW = new google.maps.InfoWindow({
-            //   content: `GRUPA: ${elem.getProperty('GRUPA')}`,
-            //   position: polyBnds.getCenter()
-            // });
-            // let iW = new google.maps.Marker({
-            //     map: map,
-            //     title: `OBREB: ${elem.getProperty('NAZWAOSIED')}`,
-            //     position: polyBnds.getCenter(),
+const getCentroids = (obj) => {
+    // let polyBnds = new google.maps.LatLngBounds(),
+    //     bounds = [];
+    // elem.getGeometry().forEachLatLng(function(path) {
+    //     bounds.push(path);
+    //     polyBnds.extend(path);
+    // });
+    // let area = google.maps.geometry.spherical.computeArea(bounds);
+    //  iW = new google.maps.InfoWindow({
+    //   content: `GRUPA: ${elem.getProperty('GRUPA')}`,
+    //   position: polyBnds.getCenter()
+    // });
+    // let iW = new google.maps.Marker({
+    //     map: map,
+    //     title: `OBREB: ${elem.getProperty('NAZWAOSIED')}`,
+    //     position: polyBnds.getCenter(),
 
-            // });
+    // });
 
-            // iW.open(map);
-            // let bounds = elem.getGeometry();
+    // iW.open(map);
+    // let bounds = elem.getGeometry();
 }
-const initObjMap = (idMap,zoom,center,lat,lng)=>{
-  return {
-        idMap:document.getElementById(idMap),
+const initObjMap = (idMap, zoom, lat, lng) => {
+    return {
+        idMap: document.getElementById(idMap),
         zoom,
-        center,
         lat,
         lng,
     }
- 
-}
-const createMaker = ()=>{}
-const createLabel = ()=>{}
 
-const initMap = () => {
-    const objMap = initObjMap('map',11,position,51.1267432,17.063248);
-    console.log(initObjMap('map',11,"position",51.1267432,17.063248))
+}
+const createMaker = () => {}
+const createLabel = () => {}
+const loadJson = (...data) => {
+data.forEach( (element, index)=> {
+    return map.data.loadGeoJson(element)
+});
+
+}
+
+const initMap = (objMap,...geo) => {
 
     var position = { lat: objMap.lat, lng: objMap.lng };
     var map = new google.maps.Map(objMap.idMap, {
         zoom: objMap.zoom,
-        center: objMap.center
+        center: position
     });
 
     /*LOAD DATA GEOJSON*/
-    map.data.loadGeoJson(groups);
-    map.data.loadGeoJson(estate);
+ geo.forEach( element=> map.data.loadGeoJson(element));
+    
 
     map.data.setStyle((elem) => {
         // console.log(elem.getProperty('NAZWAOSIED'));
 
         if (elem.f.GRUPA == undefined) {
-            
+
             map.data.addListener('mouseover', function(event) {
                 map.data.revertStyle();
                 map.data.overrideStyle(event.feature, { strokeWeight: 8 });
@@ -113,9 +117,9 @@ const initMap = () => {
 
     });
 
-        map.data.addListener('click', function(event) {
-            getWiki(event.feature.f.NAZWAOSIED);
-        });
+    map.data.addListener('click', function(event) {
+        getWiki(event.feature.f.NAZWAOSIED);
+    });
 
 
     //     map.data.addListener('click', function(event) {
@@ -145,11 +149,11 @@ const initMap = () => {
 
 /*FUNCTIONS*/
 
-const getRandomColor = ()=>{
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }

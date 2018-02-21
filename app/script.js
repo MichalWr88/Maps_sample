@@ -83,7 +83,8 @@ var mapInfo = document.getElementById("map-details"),
 sourceTmp = document.getElementById("template-details"); // temp = Handlebars.compile(sourceTmp);
 
 window.addEventListener("load", function () {
-  initMap();
+  var mapO = initObjMap('map', 11, 51.1267432, 17.063248);
+  initMap(mapO, estate, groups);
 }, false);
 
 var getCentroids = function getCentroids(obj) {// let polyBnds = new google.maps.LatLngBounds(),
@@ -106,11 +107,10 @@ var getCentroids = function getCentroids(obj) {// let polyBnds = new google.maps
   // let bounds = elem.getGeometry();
 };
 
-var initObjMap = function initObjMap(idMap, zoom, center, lat, lng) {
+var initObjMap = function initObjMap(idMap, zoom, lat, lng) {
   return {
     idMap: document.getElementById(idMap),
     zoom: zoom,
-    center: center,
     lat: lat,
     lng: lng
   };
@@ -120,21 +120,34 @@ var createMaker = function createMaker() {};
 
 var createLabel = function createLabel() {};
 
-var initMap = function initMap() {
-  var objMap = initObjMap('map', 11, position, 51.1267432, 17.063248);
-  console.log(initObjMap('map', 11, "position", 51.1267432, 17.063248));
+var loadJson = function loadJson() {
+  for (var _len = arguments.length, data = new Array(_len), _key = 0; _key < _len; _key++) {
+    data[_key] = arguments[_key];
+  }
+
+  data.forEach(function (element, index) {
+    return map.data.loadGeoJson(element);
+  });
+};
+
+var initMap = function initMap(objMap) {
   var position = {
     lat: objMap.lat,
     lng: objMap.lng
   };
   var map = new google.maps.Map(objMap.idMap, {
     zoom: objMap.zoom,
-    center: objMap.center
+    center: position
   });
   /*LOAD DATA GEOJSON*/
 
-  map.data.loadGeoJson(groups);
-  map.data.loadGeoJson(estate);
+  for (var _len2 = arguments.length, geo = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    geo[_key2 - 1] = arguments[_key2];
+  }
+
+  geo.forEach(function (element) {
+    return map.data.loadGeoJson(element);
+  });
   map.data.setStyle(function (elem) {
     // console.log(elem.getProperty('NAZWAOSIED'));
     if (elem.f.GRUPA == undefined) {
