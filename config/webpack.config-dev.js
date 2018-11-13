@@ -1,21 +1,46 @@
+//npm i webpack -D
+//npm install babel-loader@8.0.0-beta.0 @babel/core @babel/preset-env webpack
+//npm install --save-dev extract-text-webpack-plugin
+//npm install --save-dev browser-sync-webpack-plugin
+//npm i style-loader css-loader -D
+//npm i sass-loader node-sass webpack -D
+//npm install webpack-dev-server --save-dev
+
+// console.log(__dirname);
+
+/*dodatkowe nazwy*/
+// // nazwa "bundla"
+// filename: "[name].bundle.js"
+
+// // wewnętrzny identyfikator "chunka"
+// filename: "[id].bundle.js"
+
+// // "hash" całego builda
+// filename: "[name].[hash].bundle.js"
+
+
+// // "hash" danego "chunka"
+// filename: "[chunkhash].bundle.js"
+
 const path = require("path");
-const webpack = require("webpack");
+
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const extractSass = new ExtractTextPlugin({
-  filename: "./css/style.css",
+  filename: "style.css",
+  disable: process.env.NODE_ENV === "development",
 });
 
 module.exports = {
   entry: {
-    google: "./app/es6/google.js",
-    lealfet: "./app/es6/lealfelt.js",
-    index: "./app/es6/script.js",
+    google: "../app/es6/google.js",
+    lealfet: "../app/es6/lealfelt.js",
+    index: "../app/es6/script.js",
   },
 
   output: {
-    path: path.resolve(__dirname, "./app/dev"),
+    path: path.resolve(__dirname, "./app/js"),
     filename: "[name].js",
   },
 
@@ -26,7 +51,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules|bower_components)/,
         use: {
           loader: "babel-loader",
         },
@@ -39,7 +64,7 @@ module.exports = {
             {
               loader: "css-loader",
               options: {
-                sourceMap: true,
+                sourceMaps: true,
                 minimize: false,
               },
             },
@@ -47,17 +72,14 @@ module.exports = {
               loader: "postcss-loader",
               options: {
                 plugins: loader => [new require("autoprefixer")()],
-                sourceMap:true
               },
             },
             {
               loader: "sass-loader",
-                options: {
-                  sourceMap:true,
-                }
-              
             },
           ],
+          // use style-loader in development
+          fallback: "style-loader",
         }),
       },
     ], //rules
@@ -74,10 +96,5 @@ module.exports = {
         baseDir: ["app/"],
       },
     }),
-    new webpack.ProvidePlugin({
-      $: ['jquery'],
-      jQuery: ['jquery'],
-      'window.jQuery': 'jquery',
-  })
   ],
 };

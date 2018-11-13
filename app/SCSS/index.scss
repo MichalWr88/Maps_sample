@@ -1,2 +1,6 @@
-@import "./vendor/normalize.scss";
-@import  "./components/header.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+// @import "./vendor/normalize";
+// @import  "./components/global";
+
+@import  "./components/leaflet";
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Obreby Wrocław, Rejony WBO</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700|Raleway:300&amp;subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./js/style.css">
+</head>
+
+<body>
+    <header class="app__header">
+        <nav class="header__menu">
+            <button class="menu__button">menu</button>
+            <ul class="menu__list">
+                <li class="list__item"><a href="index.html">home</a></li>
+                <li class="list__item"><a href="leaflet.html">leaflet</a></li>
+            </ul>
+        </nav>
+    </header>
+    <script id="template-details" type="text/x-handlebars-template">
+        <div class="details">
+            <h3 class="presentation__header">Szczegóły</h3>
+            <p>Obreb: <span class="presentation__data">{{obreb}}</span></p>
+            <p>Rejon WBO: <span class="presentation__data">{{rejon}}</span></p>
+            <p>Powierzchnia: <span class="presentation__data">{{area}}</span></p>
+            <p>Obwód: <span class="presentation__data">{{lenth}}</span></p>
+        </div>
+    </script>
+    <!-- HEADER -->
+    <header class="wrapper header">
+        <h1 class="header__appName">Mapa Obrebów Wrocławia wraz z podziałem na Rejony WBO</h1>
+        <p class="header__desc">Dane pochodzą z Systemu Informacji Przestrzennej Wrocławia, dane demograficzne za rok 2017 Do prezentacji danych wykorzystano <a class="link header__link" href="https://developers.google.com/maps/">Google Maps APIs</a></p>
+    </header>
+    <main class="main">
+        <section class="presentation">
+
+            <div class="presentation__details" id="map-details">
+            </div>
+            <div class="presentation__map" id="map"></div>
+        </section>
+    </main>
+    <footer class="footer">
+        <p> Michał Maleszewski 2018 &copy; </p>
+        <a class="link footer__link" href="https://www.wroclaw.pl/" title="Strona domowa Wrocławia">Wrocław</a>
+        <a class="link footer__link" href="https://www.wroclaw.pl/rozmawia/wroclawski-budzet-obywatelski" title="Wrocławski Budżet Obywatelski">WBO Wrocław</a>
+        <a class="link footer__link" href="https://geoportal.wroclaw.pl/zasoby/" title="System Informacji Przestrzennej Wrocławia">SIP Wrocław</a>
+    </footer>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+<script src="google.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVzYK3BdwtdjRYw27Ovm4KQsT14Jcnn_I"></script>
+
+</html>

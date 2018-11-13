@@ -1,3 +1,4 @@
 # Obreby-Wroclaw
-Google maps api sample 
+Google maps sample
+Leaflet maps sample
 [ONLINE](https://michalwr88.github.io/Obreby-Wroclaw/app)
