@@ -9,9 +9,9 @@ const extractSass = new ExtractTextPlugin({
 
 module.exports = {
   entry: {
-    google: "./app/es6/google.js",
-    lealfet: "./app/es6/lealfelt.js",
-    index: "./app/es6/script.js",
+    google: "./app/js/google.js",
+    lealfet: "./app/js/lealfelt.js",
+    index: "./app/js/script.js",
   },
 
   output: {
@@ -35,28 +35,42 @@ module.exports = {
         test: /\.scss$/,
         use: extractSass.extract({
           fallback: "style-loader", // zabezpieczenie gdy nie mozna pliku zapisac
+          // publicPath: './../', //dodawany ciag znaków do sciezki
           use: [
             {
               loader: "css-loader",
               options: {
                 sourceMap: true,
                 minimize: false,
+                // url: false, // true czyta url do plikow
               },
             },
             {
               loader: "postcss-loader",
               options: {
                 plugins: loader => [new require("autoprefixer")()],
-                sourceMap:true
+                sourceMap: true,
               },
             },
+            // {
+            //   loader: "resolve-url-loader",
+            //   options: {
+            //     sourceMap: true,
+            //   },
+            // },
             {
               loader: "sass-loader",
-                options: {
-                  sourceMap:true,
-                }
-              
+              options: {
+                sourceMap: true,
+              },
             },
+            // {
+            //   loader: "url-loader",
+            //   options: {
+            //     limit: 10,
+            //     name: "fonts/[name].[ext]",
+            //   },
+            // },
           ],
         }),
       },
@@ -66,6 +80,7 @@ module.exports = {
   plugins: [
     extractSass,
     new BrowserSyncPlugin({
+      files: ["./app/*.html"],
       // browse to http://localhost:3000/ during development,
       // ./public directory is being served
       host: "localhost",
@@ -75,9 +90,9 @@ module.exports = {
       },
     }),
     new webpack.ProvidePlugin({
-      $: ['jquery'],
-      jQuery: ['jquery'],
-      'window.jQuery': 'jquery',
-  })
+      $: ["jquery"],
+      jQuery: ["jquery"],
+      "window.jQuery": "jquery",
+    }),
   ],
 };

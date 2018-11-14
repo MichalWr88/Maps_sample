@@ -60,12 +60,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 11:
+/***/ 10:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73,8 +73,8 @@
 
 var mapInfo = document.getElementById("map-details"),
     details = document.querySelector("#map-details"),
-    estate = "./DATA/OSIEDLA.geojson",
-    groups = "DATA/GRUPY.geojson",
+    estate = "../DATA/geojson/OSIEDLA.geojson",
+    groups = "../DATA/geojson/GRUPY.geojson",
     maps = document.getElementById('map'),
     sourceTmp = document.getElementById("template-details").innerHTML,
     temp = Handlebars.compile(sourceTmp);
@@ -142,59 +142,65 @@ var initMap = function initMap(objMap) {
         return map.data.loadGeoJson(element);
     });
 
-    map.data.setStyle(function (elem) {
-        // console.log(elem.getProperty('NAZWAOSIED'));
+    // map.data.setStyle((elem) => {
+    //     // console.log(elem.getProperty('NAZWAOSIED'));
 
-        if (elem.f.NAZWAOSIED !== undefined) {
+    //     if (elem.f.NAZWAOSIED !== undefined) {
 
-            map.data.addListener('mouseover', function (event) {
-                map.data.revertStyle();
-                map.data.overrideStyle(event.feature, {
-                    strokeWeight: 8,
-                    fillColor: "transparent"
-                });
+    //         map.data.addListener('mouseover', function(event) {
+    //             map.data.revertStyle();
+    //             map.data.overrideStyle(event.feature, { 
+    //                 strokeWeight: 8,
+    //                 fillColor: "transparent"
+    //              });
 
-                var showObj = {
-                    obreb: event.feature.f.NAZWAOSIED,
-                    rejon: event.feature.f.GRUPA,
-                    area: (event.feature.f.SHAPE_AREA / 1000000).toFixed(2) + " ha",
-                    lenth: (event.feature.f.SHAPE_LEN / 100).toFixed(2) + " km"
+    //             const showObj ={
+    //                 obreb: event.feature.f.NAZWAOSIED,
+    //                 rejon: event.feature.f.GRUPA,
+    //                 area:(event.feature.f.SHAPE_AREA/1000000).toFixed(2) + " ha",
+    //                 lenth:(event.feature.f.SHAPE_LEN/100).toFixed(2) + " km"
 
-                };
-                var html = temp(showObj);
-                mapInfo.innerHTML = html;
-            });
+    //             }
+    //             const html = temp(showObj);
+    //             mapInfo.innerHTML = html;
 
-            return {
-                fillColor: getRandomColor(),
-                clickable: true,
-                zIndex: 2
-
-            };
-        } else {
-
-            return {
-                fillColor: 'transparent',
-                clickable: false,
-                strokeWeight: 1
-
-                // elem.addListener('mouseover', function(event) {
-                //     elem.revertStyle();
-                //     // elem.overrideStyle(event.feature, { strokeWeight: 8 });
-                //     // mapInfo.innerHTML = event.feature.f.NAZWAOSIED;
-
-                // });
-                // elem.addListener('mouseout', function(event) {
-                //     // elem.revertStyle();
-                //     elem.overrideStyle(event.feature, { strokeWeight: 1 });
-                //     // mapInfo.innerHTML = event.feature.f.NAZWAOSIED;
-
-                // });
+    //         });
 
 
-            };
-        }
-    });
+    //         return {
+    //             fillColor: getRandomColor(),
+    //             clickable: true,
+    //             zIndex: 2,
+
+
+    //         }
+    //     } else {
+
+    //         return {
+    //             fillColor: 'transparent',
+    //             clickable: false,
+    //             strokeWeight: 1,
+
+    //         }
+
+    //         // elem.addListener('mouseover', function(event) {
+    //         //     elem.revertStyle();
+    //         //     // elem.overrideStyle(event.feature, { strokeWeight: 8 });
+    //         //     // mapInfo.innerHTML = event.feature.f.NAZWAOSIED;
+
+    //         // });
+    //         // elem.addListener('mouseout', function(event) {
+    //         //     // elem.revertStyle();
+    //         //     elem.overrideStyle(event.feature, { strokeWeight: 1 });
+    //         //     // mapInfo.innerHTML = event.feature.f.NAZWAOSIED;
+
+    //         // });
+
+
+    //     }
+
+
+    // });
 
     map.data.addListener('click', function (event) {});
 
