@@ -14,7 +14,7 @@
   <body class="container-fluid">
     <header class="container">
       <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-        <span class="navbar-brand w-10"> <img src="./DATA/img/map.svg" width="40" height="40" alt="" /></span>
+        <span class="navbar-brand w-10"> <img src="./DATA/img/map.svg" width="40" height="40" alt=""/></span>
         <button
           class="navbar-toggler"
           type="button"
@@ -37,16 +37,23 @@
       </nav>
     </header>
     <main class="container">
-      <h1 class="header">prezentacja map</h1>
       <h2>wykorzystane API:</h2>
-      <ul>
-        <li>Google map <a href="https://cloud.google.com/maps-platform/">dokumentacja</a></li>
-        <li>leaflet <a href="https://leafletjs.com/">dokumentacja</a></li>
+      <ul class="row w-100">
+        <li class="api__item list-group-item col-lg-4 p-0 m-2 p-3">
+          <figure class=" position-relative ">
+            <img class="card-img-top api__img " src="./DATA/img/google.png" alt="Card image cap" />
+            <figcaption>
+              <a href="https://cloud.google.com/maps-platform/" class="btn btn-light api__btn position-absolute"> show more </a>
+            </figcaption>
+          </figure>
+        </li>
+        <li class="list-group-item col-lg-4 p-0 m-2">
+          <figure class="api__item">
+            <img class="card-img-top" src="./DATA/img/leaflet.jpg" alt="Card image cap" />
+            <figcaption><a href="https://leafletjs.com/" class="btn btn-light"> show more </a></figcaption>
+          </figure>
+        </li>
       </ul>
-      <button type="button" class="btn btn-primary">Primary</button>
-      <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-        Tooltip on top
-      </button>
     </main>
   </body>
   <script src="dev/index.js"></script>
