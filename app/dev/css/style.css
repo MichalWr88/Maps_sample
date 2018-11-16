@@ -6811,8 +6811,7 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6; } }
 
 .api__item {
-  overflow: hidden;
-  z-index: -1; }
+  overflow: hidden; }
   .api__item::after {
     position: absolute;
     content: '';
@@ -6822,7 +6821,17 @@ a.text-dark:hover, a.text-dark:focus {
     bottom: 0;
     background-color: grey;
     opacity: 0.4;
-    z-index: 1; }
+    transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1); }
+  .api__item:hover:after {
+    opacity: 0; }
+
+.api__btn {
+  content: '';
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 2; }
 
 html, body {
   width: 100%;
